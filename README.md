@@ -1,5 +1,6 @@
 Strukur Proyek
 KOSTIFY
+```
 ├── kostify-backend/
 │   ├── package.json
 │   └── server.js
@@ -10,3 +11,4 @@ KOSTIFY
 ├── laporan_progress/ 
 ├── .gitignore     
 └── README.md         # Dokumentasi utama
+```
