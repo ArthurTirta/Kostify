@@ -1,0 +1,36 @@
+# Node.js & npm
+node_modules/
+npm-debug.log
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+
+# IDE & Editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Build folders
+dist/
+build/
+.serverless/
+.next/
+out/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backend (Express) logs
+logs/
+*.log
+
+# Frontend (React) cache
+.cache/
