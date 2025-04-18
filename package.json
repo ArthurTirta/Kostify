@@ -1,0 +1,11 @@
+{
+  "name": "kostify3",
+  "version": "1.0.0",
+  "description": "Strukur Proyek\r KOSTIFY\r ```\r ├── kostify-backend/\r │   ├── package.json\r │   └── server.js\r ├── kostify-frontend/\r │   ├── src/\r │   ├── public/\r │   └── package.json\r ├── laporan_progress/ \r ├── .gitignore     \r └── README.md         # Dokumentasi utama\r ```",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
