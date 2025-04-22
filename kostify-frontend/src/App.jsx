@@ -11,11 +11,11 @@ function App() {
       <p>Silakan navigasi ke halaman lain:</p>
       <nav>
         <ul>
-          <li><Link to="/landing">Landing Page</Link></li>
           <li><Link to="/dashboard">Dashboard</Link></li>
           <li><Link to="/ruangan">Ruangan</Link></li>
           <li><Link to="/laporan">Laporan Keuangan</Link></li>
           <li><Link to="/feedback">Feedback</Link></li>
+          <li><Link to="/AuthPage">AuthPage</Link></li>
           <li><Link to="/about">About Us</Link></li>
 
         </ul>
