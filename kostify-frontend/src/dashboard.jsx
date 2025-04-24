@@ -48,47 +48,69 @@ function Dashboard() {
 
   return (
     <div className="page-container">
-      <h1>Dashboard - Data Users</h1>
-
-      <div>
-        <input
-          type="text"
-          value={newNama}
-          onChange={(e) => setNewNama(e.target.value)}
-          placeholder="Nama baru"
-        />
-        <button onClick={handleAddUser}>Tambah User</button>
+      {/* Sidebar */}
+      <div className="sidebar">
+        <h2>Dashboard</h2>
+        <ul>
+          <li><a href="#">Dashboard</a></li>
+          <li><a href="#">Feedback</a></li>
+          <li><a href="#">Laporan Keuangan</a></li>
+          <li><a href="#">About Us</a></li>
+        </ul>
       </div>
 
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            {editId === user.id ? (
-              <>
-                <input
-                  value={editNama}
-                  onChange={(e) => setEditNama(e.target.value)}
-                />
-                <button className="edit-btn" onClick={handleUpdate}>Simpan</button>
-                <button className="cancel-btn" onClick={() => setEditId(null)}>Batal</button>
-              </>
-            ) : (
-              <>
-                {user.nama}{" "}
-                <button className="edit-btn" onClick={() => {
-                  setEditId(user.id);
-                  setEditNama(user.nama);
-                }}>Edit</button>
-                <button className="delete-btn" onClick={() => handleDelete(user.id)}>Hapus</button>
-              </>
-            )}
-          </li>
-        ))}
-      </ul>
+      {/* Main Content */}
+      <div className="main-content">
+        <h1>Dashboard - Data Users</h1>
 
-      <Link to="/" style={{ display: 'inline-block', marginTop: '20px' }}>
-        ⬅️ Kembali ke Halaman Utama
-      </Link>
+        <div>
+          <input
+            type="text"
+            value={newNama}
+            onChange={(e) => setNewNama(e.target.value)}
+            placeholder="Nama baru"
+          />
+          <button onClick={handleAddUser}>Tambah User</button>
+        </div>
+
+        <div className="card-container">
+          <div className="card">
+            <img src="room1.jpg" alt="Room 1" />
+            <div className="card-content">
+              <div className="card-title">Ruangan 1</div>
+              <div className="card-status available">Available</div>
+            </div>
+          </div>
+
+          <div className="card">
+            <img src="room2.jpg" alt="Room 2" />
+            <div className="card-content">
+              <div className="card-title">Ruangan 2</div>
+              <div className="card-status booked">Booked</div>
+            </div>
+          </div>
+
+          <div className="card">
+            <img src="room3.jpg" alt="Room 3" />
+            <div className="card-content">
+              <div className="card-title">Ruangan 3</div>
+              <div className="card-status available">Available</div>
+            </div>
+          </div>
+
+          <div className="card">
+            <img src="room4.jpg" alt="Room 4" />
+            <div className="card-content">
+              <div className="card-title">Ruangan 4</div>
+              <div className="card-status available">Available</div>
+            </div>
+          </div>
+        </div>
+
+        <Link to="/" className="link-back">
+          ⬅️ Kembali ke Halaman Utama
+        </Link>
+      </div>
     </div>
   );
 }
