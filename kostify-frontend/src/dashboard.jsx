@@ -52,11 +52,14 @@ function Dashboard() {
       <div className="sidebar">
         <h2>Dashboard</h2>
         <ul>
-          <li><a href="#">Dashboard</a></li>
-          <li><a href="#">Feedback</a></li>
-          <li><a href="#">Laporan Keuangan</a></li>
-          <li><a href="#">About Us</a></li>
+          <li><Link to="#">Dashboard</Link></li>
         </ul>
+
+        <div className="button-container">
+          <button>Feedback</button>
+          <button>Laporan Keuangan</button>
+          <button>About Us</button>
+        </div>
       </div>
 
       {/* Main Content */}
