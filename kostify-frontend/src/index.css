@@ -114,3 +114,112 @@ button:hover {
   background-color: #3949ab;
 }
 
+
+Global Styles
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+/* Page Container */
+.page-container {
+  margin-left: 250px; /* Adjust to accommodate sidebar */
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Input & Buttons */
+input[type="text"] {
+  padding: 10px;
+  width: 300px;
+  margin-right: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #2196f3;
+  color: white;
+}
+
+/* Edit/Delete Buttons */
+button.edit-btn {
+  background-color: #4caf50;
+  margin-left: 10px;
+}
+
+button.edit-btn:hover {
+  background-color: #388e3c;
+}
+
+button.delete-btn {
+  background-color: #e57373;
+  margin-left: 10px;
+}
+
+button.delete-btn:hover {
+  background-color: #f44336;
+}
+
+button.cancel-btn {
+  background-color: #f2f2f2;
+  margin-left: 10px;
+}
+
+button.cancel-btn:hover {
+  background-color: #e0e0e0;
+}
+
+/* User List */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+li {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #fafafa;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+li input {
+  padding: 5px;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+/* Link Back to Homepage */
+a {
+  color: #2196f3;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

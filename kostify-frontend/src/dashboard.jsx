@@ -60,26 +60,26 @@ function Dashboard() {
         <button onClick={handleAddUser}>Tambah User</button>
       </div>
 
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+      <ul>
         {users.map((user) => (
-          <li key={user.id} style={{ margin: '10px 0' }}>
+          <li key={user.id}>
             {editId === user.id ? (
               <>
                 <input
                   value={editNama}
                   onChange={(e) => setEditNama(e.target.value)}
                 />
-                <button onClick={handleUpdate}>Simpan</button>
-                <button onClick={() => setEditId(null)}>Batal</button>
+                <button className="edit-btn" onClick={handleUpdate}>Simpan</button>
+                <button className="cancel-btn" onClick={() => setEditId(null)}>Batal</button>
               </>
             ) : (
               <>
                 {user.nama}{" "}
-                <button onClick={() => {
+                <button className="edit-btn" onClick={() => {
                   setEditId(user.id);
                   setEditNama(user.nama);
                 }}>Edit</button>
-                <button onClick={() => handleDelete(user.id)}>Hapus</button>
+                <button className="delete-btn" onClick={() => handleDelete(user.id)}>Hapus</button>
               </>
             )}
           </li>
@@ -94,4 +94,3 @@ function Dashboard() {
 }
 
 export default Dashboard;
-
