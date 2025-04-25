@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import './index.css';
 
 function Dashboard() {
   const [users, setUsers] = useState([]);
@@ -64,21 +65,16 @@ function Dashboard() {
 
       {/* Main Content */}
       <div className="main-content">
-        <h1>Dashboard - Data Users</h1>
-
-        <div>
-          <input
-            type="text"
-            value={newNama}
-            onChange={(e) => setNewNama(e.target.value)}
-            placeholder="Nama baru"
-          />
-          <button onClick={handleAddUser}>Tambah User</button>
-        </div>
+        <h1>Selamat Datang di Sistem Informasi Kami</h1>
+        <p>Solusi terintegrasi untuk manajemen ruangan dan keuangan</p>
+        <Link to="/learn-more" className="btn-primary">Pelajari Lebih Lanjut</Link>
 
         <div className="card-container">
           <div className="card">
-            <img src="room1.jpg" alt="Room 1" />
+            <img 
+              src="https://plus.unsplash.com/premium_photo-1684164601278-3063c81f17dc?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cm9vbXxlbnwwfHwwfHx8MA%3D%3D"
+              alt="Room 1" 
+            />
             <div className="card-content">
               <div className="card-title">Ruangan 1</div>
               <div className="card-status available">Available</div>
@@ -86,7 +82,10 @@ function Dashboard() {
           </div>
 
           <div className="card">
-            <img src="room2.jpg" alt="Room 2" />
+            <img 
+              src="https://plus.unsplash.com/premium_photo-1684164601278-3063c81f17dc?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cm9vbXxlbnwwfHwwfHx8MA%3D%3D"
+              alt="Room 2" 
+            />
             <div className="card-content">
               <div className="card-title">Ruangan 2</div>
               <div className="card-status booked">Booked</div>
@@ -94,7 +93,10 @@ function Dashboard() {
           </div>
 
           <div className="card">
-            <img src="room3.jpg" alt="Room 3" />
+            <img 
+              src="https://plus.unsplash.com/premium_photo-1684164601278-3063c81f17dc?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cm9vbXxlbnwwfHwwfHx8MA%3D%3D"
+              alt="Room 3" 
+            />
             <div className="card-content">
               <div className="card-title">Ruangan 3</div>
               <div className="card-status available">Available</div>
@@ -102,7 +104,10 @@ function Dashboard() {
           </div>
 
           <div className="card">
-            <img src="room4.jpg" alt="Room 4" />
+            <img 
+              src="https://plus.unsplash.com/premium_photo-1684164601278-3063c81f17dc?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cm9vbXxlbnwwfHwwfHx8MA%3D%3D"
+              alt="Room 4" 
+            />
             <div className="card-content">
               <div className="card-title">Ruangan 4</div>
               <div className="card-status available">Available</div>
