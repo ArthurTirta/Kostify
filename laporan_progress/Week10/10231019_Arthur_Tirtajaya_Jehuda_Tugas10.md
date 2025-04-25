@@ -3,15 +3,19 @@
 **Mitra**: Solata Kos  
 **Pekan ke-**: 10  
 **Tanggal**: 18/04/2025  
-
+**Anggota Kelompok**:
+- Arthur Tirtajaya Jehuda -10231019
+- Muhammad Athala Romero - 10231059
+- Rizki Abdul Aziz - 10231085
+- Yosan Pratiwi - 10231091
 ## Progress Summary
-Implementasi awal database dan frontend/backend untuk mendukung kebutuhan bisnis kos-kosan Solata Kos.  
+Implementasi awal database dan fondasi frontend/backend untuk mendukung kebutuhan bisnis kos-kosan Solata Kos.  
 
 ## Accomplished Tasks
 
 - Merancang Skema Database
-![Skema ERD yang terdiri booking, payment, transaction hidtory, feedback, menu, dan customer](image.png)
-- REST API
+![Skema ERD yang terdiri booking, payment, transaction history, feedback, menu, dan customer](image.png)
+- BACKEND SKELETON
 ```
 Backend dikembangkan menggunakan Express.js. Beberapa endpoint dasar yang sudah dibuat:
 
@@ -29,40 +33,25 @@ PATCH /users/:id - Mengubah sebagian data user
 
 DELETE /users/:id - Menghapus user berdasarkan ID
 ```
-- Menyiapkan Struktur Frontend Basic
-```
-Struktur Frontend sudah terbentuk sebagai berikut:
+- FRONTEND SKELETON
 
-kostify-frontend/
-|--- public/
-|--- src/
-|   |--- assets/
-|   |--- App.css
-|   |--- App.jxs
-|   |--- about.jxs
-|   |--- dashboard.jsx
-|   |--- feedback.jsx
-|   |--- index.css
-|   |--- landing.jsx
-|   |--- laporan.jsx
-|   |--- main.jsx
-|   |--- ruangan.jsx
-|--- package-lock.json
-|--- package.json
-|--- README.md
-|--- vite.config.js
-```
-- Menyiapkan Struktur Backend Basic
-```
-Struktur Frontend sudah terbentuk sebagai berikut:
+Halaman dasar  Frontend dibuat dengan susunan sebagai berikut
 
-kostify-backend/
-|--- index.js
-|--- package-lock.json
-|--- package.json
-``
+Landing Page
+![Tampilan landing page masih dasar](image-1.png)
+Dashboard
+![Tampilan Dashboard masih dasar dengan disertai link ke halaman lain ](image-6.png)
+Ruangan
+![Tampilan Ruangan masih dasar dengan disertai link ke halaman lain](image-8.png)
+Laporan Keuangan
+![Tampilan Laporan Keuangan masih dasar dengan disertai link ke halaman lain ](image-9.png)
+Fedback
+![Tampilan Feedback masih dasar dengan disertai link ke halaman lain ](image-10.png)
+About Us
+![Tampilan About Us masih dasar dengan disertai link ke halaman lain](image-11.png)
+
 - Demo Progress ke Mitra
-```
+
 Kami telah melakukan progress awal kepada mitra sebagai berikut:
 
 - Penjelasan alur aplikasi dari frontend ke backend
@@ -71,25 +60,29 @@ Kami telah melakukan progress awal kepada mitra sebagai berikut:
 
 
 ## Challenges & Solutions
--
-
+- **Challenge 1**: Kendala tidak dapat menemukan waktu luang mitra
+  - **Solution**: Menentukan jadwal mitra jauh-jauh hari.
 ## Next Week Plan
 - Task 1 Membangun sistem autentikasi
 - Task 2 Mengimplementasikan Fitur Dashboard
 
-
-
 ## Contributions
 - **Arthur Tirtajaya Jehuda**: Monitor Anggota, Diskusi dengan Mitra.
 - **Muhammad Athala Romero**: Menyiapkan struktur proyek backend
-- **Rizki Abdul Aziz**: Testing fitur  
+- **Rizki Abdul Aziz**: Testing fitur yang telah dibuat.  
 - **Yosan Pratiwi**: Routing Frontend
 ## Screenshots / Demo
-Pada minggu 10 Proyek mencapai bentuk prototype
-![alt text](image-1.png)
-![alt text](image-6.png)
-![alt text](image-7.png)
-![alt text](image-8.png)
-![alt text](image-9.png)
-![alt text](image-10.png)
-![alt text](image-11.png)
+Pada minggu 10 Proyek mencapai bentuk prototype seperti berikut
+
+Landing Page
+![Tampilan landing page masih dasar](image-1.png)
+Dashboard
+![Tampilan Dashboard masih dasar dengan disertai link ke halaman lain ](image-6.png)
+Ruangan
+![Tampilan Ruangan masih dasar dengan disertai link ke halaman lain](image-8.png)
+Laporan Keuangan
+![Tampilan Laporan Keuangan masih dasar dengan disertai link ke halaman lain ](image-9.png)
+Fedback
+![Tampilan Feedback masih dasar dengan disertai link ke halaman lain ](image-10.png)
+About Us
+![Tampilan About Us masih dasar dengan disertai link ke halaman lain](image-11.png)
