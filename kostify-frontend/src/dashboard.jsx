@@ -51,23 +51,28 @@ function Dashboard() {
     <div className="page-container">
       {/* Sidebar */}
       <div className="sidebar">
-        <h2>Dashboard</h2>
-        <ul>
-          <li><Link to="#">Dashboard</Link></li>
-        </ul>
-
+     
         <div className="button-container">
+        <Link to="/dashboard">
+          <button>Dashboard</button>
+        </Link>
+        <Link to="/feedback">
           <button>Feedback</button>
+        </Link>
+        <Link to="/laporan">
           <button>Laporan Keuangan</button>
+        </Link>
+        <Link to="/about">
           <button>About Us</button>
+        </Link>
         </div>
+
       </div>
 
       {/* Main Content */}
       <div className="main-content">
         <h1>Selamat Datang di Sistem Informasi Kami</h1>
         <p>Solusi terintegrasi untuk manajemen ruangan dan keuangan</p>
-        <Link to="/learn-more" className="btn-primary">Pelajari Lebih Lanjut</Link>
 
         <div className="card-container">
           <div className="card">
