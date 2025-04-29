@@ -5,27 +5,47 @@ import './index.css';
 
 function Dashboard() {
   const [users, setUsers] = useState([]);
+  const [rooms, setRooms] = useState([]);
   const [newNama, setNewNama] = useState('');
   const [editId, setEditId] = useState(null);
   const [editNama, setEditNama] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const api = 'http://localhost:3000/users';
+  const usersApi = 'http://localhost:3000/users';
+  const roomsApi = 'http://localhost:3000/rooms';
 
-  // GET
+  // GET Users
   const fetchUsers = () => {
-    axios.get(api)
+    axios.get(usersApi)
       .then(res => setUsers(res.data))
       .catch(err => console.error(err));
   };
 
+  // GET Rooms
+  const fetchRooms = () => {
+    setLoading(true);
+    axios.get(roomsApi)
+      .then(res => {
+        setRooms(res.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error fetching rooms:', err);
+        setError('Error saat memuat ruangan');
+        setLoading(false);
+      });
+  };
+
   useEffect(() => {
     fetchUsers();
+    fetchRooms();
   }, []);
 
   // POST
   const handleAddUser = () => {
     if (!newNama.trim()) return;
-    axios.post(api, { nama: newNama })
+    axios.post(usersApi, { nama: newNama })
       .then(() => {
         setNewNama('');
         fetchUsers();
@@ -34,18 +54,34 @@ function Dashboard() {
 
   // DELETE
   const handleDelete = (id) => {
-    axios.delete(`${api}/${id}`).then(() => fetchUsers());
+    axios.delete(`${usersApi}/${id}`).then(() => fetchUsers());
   };
 
   // PUT
   const handleUpdate = () => {
-    axios.put(`${api}/${editId}`, { nama: editNama })
+    axios.put(`${usersApi}/${editId}`, { nama: editNama })
       .then(() => {
         setEditId(null);
         setEditNama('');
         fetchUsers();
       });
   };
+
+  // Render la tarjeta de habitación
+  const renderRoomCard = (room) => (
+    <div className="card" key={room.id}>
+      <img 
+        src="https://plus.unsplash.com/premium_photo-1684164601278-3063c81f17dc?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cm9vbXxlbnwwfHwwfHx8MA%3D%3D"
+        alt={room.name} 
+      />
+      <div className="card-content">
+        <div className="card-title">{room.name}</div>
+        <div className="card-price">Rp {room.price.toLocaleString()}</div>
+        <div className={`card-status ${room.status}`}>{room.status === 'available' ? 'Available' : 'Booked'}</div>
+        <div className="card-description">{room.description}</div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="page-container">
@@ -75,49 +111,15 @@ function Dashboard() {
         <p>Solusi terintegrasi untuk manajemen ruangan dan keuangan</p>
 
         <div className="card-container">
-          <div className="card">
-            <img 
-              src="https://plus.unsplash.com/premium_photo-1684164601278-3063c81f17dc?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cm9vbXxlbnwwfHwwfHx8MA%3D%3D"
-              alt="Room 1" 
-            />
-            <div className="card-content">
-              <div className="card-title">Ruangan 1</div>
-              <div className="card-status available">Available</div>
-            </div>
-          </div>
-
-          <div className="card">
-            <img 
-              src="https://plus.unsplash.com/premium_photo-1684164601278-3063c81f17dc?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cm9vbXxlbnwwfHwwfHx8MA%3D%3D"
-              alt="Room 2" 
-            />
-            <div className="card-content">
-              <div className="card-title">Ruangan 2</div>
-              <div className="card-status booked">Booked</div>
-            </div>
-          </div>
-
-          <div className="card">
-            <img 
-              src="https://plus.unsplash.com/premium_photo-1684164601278-3063c81f17dc?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cm9vbXxlbnwwfHwwfHx8MA%3D%3D"
-              alt="Room 3" 
-            />
-            <div className="card-content">
-              <div className="card-title">Ruangan 3</div>
-              <div className="card-status available">Available</div>
-            </div>
-          </div>
-
-          <div className="card">
-            <img 
-              src="https://plus.unsplash.com/premium_photo-1684164601278-3063c81f17dc?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cm9vbXxlbnwwfHwwfHx8MA%3D%3D"
-              alt="Room 4" 
-            />
-            <div className="card-content">
-              <div className="card-title">Ruangan 4</div>
-              <div className="card-status available">Available</div>
-            </div>
-          </div>
+          {loading ? (
+            <p>Memuat ruangan...</p>
+          ) : error ? (
+            <p>{error}</p>
+          ) : rooms.length === 0 ? (
+            <p>Tidak ada ruangan tersedia</p>
+          ) : (
+            rooms.map(room => renderRoomCard(room))
+          )}
         </div>
 
         <Link to="/" className="link-back">
