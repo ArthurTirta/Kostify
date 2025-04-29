@@ -365,9 +365,6 @@ body {
   height: 100%;
 }
 
-
-
-
 .sidebar .button-container button {
   margin-top: 20px;
   background-color: #3498db;
@@ -466,4 +463,204 @@ body {
 
 .link-back:hover {
   text-decoration: underline;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.modal-actions button {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.modal-actions button:first-child {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.modal-actions button.cancel {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+/* Admin Room List */
+.admin-room-list {
+  margin-top: 2rem;
+  overflow-x: auto;
+}
+
+.admin-room-list table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.admin-room-list th,
+.admin-room-list td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.admin-room-list th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+.admin-room-list .edit-btn,
+.admin-room-list .delete-btn {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+.admin-room-list .edit-btn {
+  background-color: #4361ee;
+  color: white;
+}
+
+.admin-room-list .delete-btn {
+  background-color: #e63946;
+  color: white;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status-badge.available {
+  background-color: #d8f3dc;
+  color: #2d6a4f;
+}
+
+.status-badge.booked {
+  background-color: #ffccd5;
+  color: #9d0208;
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Room Details */
+.room-detail-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.room-details p {
+  margin-bottom: 0.75rem;
+}
+
+/* Card Price and Status */
+.card-price {
+  font-weight: 500;
+  color: #333;
+  margin: 0.25rem 0;
+}
+
+.card-status {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin: 0.25rem 0;
+  display: inline-block;
+}
+
+.card-status.available {
+  background-color: #d8f3dc;
+  color: #2d6a4f;
+}
+
+.card-status.booked {
+  background-color: #ffccd5;
+  color: #9d0208;
+}
+
+.view-details-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-top: 0.75rem;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* Price Summary */
+.price-summary {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+.price-summary p {
+  font-weight: 500;
+  margin: 0;
 }

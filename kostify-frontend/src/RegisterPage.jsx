@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import './AuthPage.css';
 
-const AuthPage = () => {
+const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState("penyewa");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,36 +20,34 @@ const AuthPage = () => {
     setSuccessMessage("");
 
     // Basic form validation
-    if (!username || !password) {
-      setErrorMessage("Username and Password are required!");
+    if (!username || !password || !confirmPassword) {
+      setErrorMessage("Semua field harus diisi!");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setErrorMessage("Password tidak cocok!");
       return;
     }
 
     setIsLoading(true);
     
     try {
-      const response = await axios.post("http://localhost:3000/auth/login", {
+      const response = await axios.post("http://localhost:3000/auth/register", {
         username,
         password,
+        role
       });
-      
       setSuccessMessage(response.data.message);
-      
-      // Save user data in localStorage
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      
-      // Redirect based on user role
-      if (response.data.user.role === 'admin') {
-        navigate('/admin-dashboard');
-      } else {
-        navigate('/user-dashboard');
-      }
-      
+      // Reset form after successful registration
+      setUsername("");
+      setPassword("");
+      setConfirmPassword("");
     } catch (error) {
       setErrorMessage(
         error.response 
           ? error.response.data.message || error.response.data.error
-          : "Network error. Please try again later."
+          : "Network error. Silakan coba lagi nanti."
       );
     } finally {
       setIsLoading(false);
@@ -60,8 +58,8 @@ const AuthPage = () => {
     <div className="auth-page">
       <div className="auth-container">
         <div className="auth-header">
-          <h2>Welcome Back</h2>
-          <p>Please login to your account</p>
+          <h2>Buat Akun</h2>
+          <p>Daftar untuk mengakses layanan kami</p>
         </div>
         
         {errorMessage && <div className="message error-message">{errorMessage}</div>}
@@ -75,7 +73,7 @@ const AuthPage = () => {
               id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter your username"
+              placeholder="Masukkan username Anda"
               className="form-input"
             />
           </div>
@@ -87,19 +85,34 @@ const AuthPage = () => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
+              placeholder="Masukkan password Anda"
               className="form-input"
             />
           </div>
 
-          <div className="form-options">
-            <div className="remember-me">
-              <input type="checkbox" id="remember" />
-              <label htmlFor="remember">Remember me</label>
-            </div>
-            <Link to="/forgot-password" className="forgot-password">
-              Forgot password?
-            </Link>
+          <div className="form-group">
+            <label htmlFor="confirmPassword">Konfirmasi Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Konfirmasi password Anda"
+              className="form-input"
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="role">Peran</label>
+            <select
+              id="role"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className="form-input"
+            >
+              <option value="penyewa">Penyewa</option>
+              <option value="admin">Admin</option>
+            </select>
           </div>
 
           <button 
@@ -107,11 +120,11 @@ const AuthPage = () => {
             className="submit-button"
             disabled={isLoading}
           >
-            {isLoading ? 'Logging in...' : 'Login'}
+            {isLoading ? 'Mendaftar...' : 'Daftar Sekarang'}
           </button>
 
           <div className="auth-footer">
-            <p>Don't have an account? <Link to="/register">Sign up</Link></p>
+            <p>Sudah memiliki akun? <Link to="/Authpage">Masuk</Link></p>
           </div>
         </form>
       </div>
@@ -119,4 +132,4 @@ const AuthPage = () => {
   );
 };
 
-export default AuthPage;
+export default RegisterPage; 

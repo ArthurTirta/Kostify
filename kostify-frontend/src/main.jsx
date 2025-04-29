@@ -8,6 +8,9 @@ import Ruangan from './ruangan.jsx';
 import LaporanKeuangan from './laporan.jsx';
 import Feedback from './feedback.jsx';
 import AuthPage from './AuthPage.jsx';
+import RegisterPage from './RegisterPage.jsx';
+import AdminDashboard from './AdminDashboard.jsx';
+import UserDashboard from './UserDashboard.jsx';
 import About from './about.jsx';
 
 createRoot(document.getElementById('root')).render(
@@ -20,6 +23,9 @@ createRoot(document.getElementById('root')).render(
         <Route path="/laporan" element={<LaporanKeuangan />} />
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/Authpage" element={<AuthPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/user-dashboard" element={<UserDashboard />} />
         <Route path="/about" element={<About />} />
       </Routes>
     </BrowserRouter>
