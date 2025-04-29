@@ -1,69 +1,3 @@
-// import { useState, useEffect } from 'react';
-// import { Link } from 'react-router-dom';
-// import './App.css';
-
-
-
-
-// function App() {
-//   const slides = [
-//     '/gambar1.jpg',
-//     '/gambar2.jpg',
-//     '/gambar3.jpg',
-//   ];
-//   const [currentSlide, setCurrentSlide] = useState(0);
-
-//   useEffect(() => {
-//     const interval = setInterval(() => {
-//       setCurrentSlide((prev) => (prev + 1) % slides.length);
-//     }, 3000); // Ganti slide tiap 3 detik
-//     return () => clearInterval(interval);
-//   }, []);
-
-//   return (
-//     <>
-//       <nav>
-//         <ul>
-//           <img id="logo" src="/assets/LOGO SI-1.png" alt="Logo" />
-//           <li><Link to="/dashboard">Dashboard</Link></li>
-//           <li><Link to="/ruangan">Ruangan</Link></li>
-//           <li><Link to="/laporan">Laporan Keuangan</Link></li>
-//           <li><Link to="/feedback">Feedback</Link></li>
-//           <li><Link to="/AuthPage">AuthPage</Link></li>
-//           <li><Link to="/about">About Us</Link></li>
-//         </ul>
-//       </nav>
-
-//       <h1>Halaman Utama</h1>
-//       <p>Silakan navigasi ke halaman lain:</p>
-
-//       <div className="autoslide">
-//         <img id="Autoslide"src={slides[currentSlide]} alt={`Slide ${currentSlide}`} />
-//       </div>
-//       <div className="description-section">
-//         <h2>Selamat Datang di Sistem Informasi Kami</h2>
-//         <p>Kami menyediakan berbagai layanan manajemen ruangan, pelaporan keuangan, dan umpan balik untuk meningkatkan pengalaman Anda.</p>
-//       </div>
-
-//       <div className="feedback-section">
-//         <h3 id="feedback-slidecard">Kritik dan Saran</h3>
-//         <div>Card1</div>
-//         <div>Card2</div>
-//         <div>Card3</div>
-//         <div>Card4</div>
-//       </div>
-
-//       <footer className="footer">
-//         <p>&copy; 2025 Sistem Informasi. All rights reserved.</p>
-//       </footer>
-//     </>
-//   );
-// }
-
-// export default App;
-
-
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
@@ -144,7 +78,7 @@ function App() {
         </div>
       </nav>
 
-      <main className="main-content">
+      <main className="main-contentlp">
         <div className="hero-section">
           <div className="hero-text">
             <h1>Selamat Datang di Kostify</h1>

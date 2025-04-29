@@ -24,11 +24,9 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #EEE9DE;}
 
 h1 {
   font-size: 3.2em;
@@ -72,13 +70,8 @@ body {
 }
 
 .page-container {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  text-align: center;
+  display: flex;
+  min-height: 100vh;
 }
 
 a {
@@ -127,36 +120,8 @@ button:hover {
   box-sizing: border-box;
 }
 
-.sidebar h2 {
-  font-size: 22px;
-  margin-bottom: 20px;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.sidebar ul li {
-  margin: 15px 0;
-}
-
-.sidebar ul li a {
-  color: white;
-  text-decoration: none;
-  font-size: 16px;
-}
-
-.sidebar ul li a:hover {
-  background-color: #2196f3;
-  padding: 10px;
-  border-radius: 5px;
-}
-
 .main-content {
   margin-left: 270px;
-  padding: 20px;
-  flex-grow: 1;
 }
 
 h1 {
@@ -278,7 +243,6 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
   background-color: #333;
 }
 
@@ -401,23 +365,8 @@ body {
   height: 100%;
 }
 
-.sidebar h2 {
-  font-size: 24px;
-}
 
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
 
-.sidebar ul li {
-  margin: 10px 0;
-}
-
-.sidebar ul li a {
-  color: white;
-  text-decoration: none;
-}
 
 .sidebar .button-container button {
   margin-top: 20px;
@@ -425,7 +374,7 @@ body {
   color: white;
   padding: 10px;
   border: none;
-  width: 100%;
+  width: 150px;
   cursor: pointer;
 }
 
@@ -434,10 +383,10 @@ body {
 }
 
 /* Main Content */
-.main-content {
-  margin-left: 220px;
+/* .main-content {
+  margin-left: 200px;
   padding: 20px;
-}
+} */
 
 .main-content h1 {
   font-size: 32px;
