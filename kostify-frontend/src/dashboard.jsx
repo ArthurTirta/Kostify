@@ -76,14 +76,17 @@ function Dashboard() {
 
         <div className="card-container">
           <div className="card">
+          <Link to="/cardroomadmin">
+          
             <img 
               src="https://plus.unsplash.com/premium_photo-1684164601278-3063c81f17dc?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cm9vbXxlbnwwfHwwfHx8MA%3D%3D"
               alt="Room 1" 
-            />
+              />
             <div className="card-content">
               <div className="card-title">Ruangan 1</div>
               <div className="card-status available">Available</div>
             </div>
+              </Link>
           </div>
 
           <div className="card">

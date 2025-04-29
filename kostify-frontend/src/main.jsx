@@ -9,6 +9,7 @@ import LaporanKeuangan from './laporan.jsx';
 import Feedback from './feedback.jsx';
 import AuthPage from './AuthPage.jsx';
 import About from './about.jsx';
+import CardRoomAdmin from './cardroomadmin.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -21,6 +22,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/Authpage" element={<AuthPage />} />
         <Route path="/about" element={<About />} />
+        <Route path="/cardroomadmin" element={<CardRoomAdmin />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
