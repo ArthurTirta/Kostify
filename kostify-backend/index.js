@@ -4,11 +4,34 @@ const app = express();
 const port = 3000;
 const authRoutes = require('./routes/auth');
 const roomsRoutes = require('./routes/rooms');
+const uploadRoutes = require('./routes/upload');
+const path = require('path');
+const fs = require('fs');
+
+// Pastikan folder uploads ada
+const uploadsDir = path.join(__dirname, 'public', 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  console.log('Creating uploads directory:', uploadsDir);
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
 
 app.use(cors());
 app.use(express.json());
+
+// Middleware untuk logging permintaan
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  next();
+});
+
+// Konfigurasi file statis untuk akses gambar
+console.log('Setting up static files directory:', path.join(__dirname, 'public'));
+app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
+
+// Rute API
 app.use('/auth', authRoutes);
 app.use('/rooms', roomsRoutes);
+app.use('/upload', uploadRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello from Express!');

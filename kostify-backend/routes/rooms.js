@@ -39,7 +39,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   console.log('POST /rooms - Creating new room', req.body);
   try {
-    const { name, price, description, status } = req.body;
+    const { name, price, description, status, image_url } = req.body;
     
     // Validate input
     if (!name || !price) {
@@ -48,8 +48,8 @@ router.post('/', async (req, res) => {
     }
     
     const result = await pool.query(
-      'INSERT INTO rooms (name, price, description, status) VALUES ($1, $2, $3, $4) RETURNING *',
-      [name, price, description, status || 'available']
+      'INSERT INTO rooms (name, price, description, status, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [name, price, description, status || 'available', image_url || 'https://plus.unsplash.com/premium_photo-1684164601278-3063c81f17dc?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cm9vbXxlbnwwfHwwfHx8MA%3D%3D']
     );
     
     console.log(`Created room: ${JSON.stringify(result.rows[0])}`);
@@ -65,7 +65,7 @@ router.put('/:id', async (req, res) => {
   console.log(`PUT /rooms/${req.params.id} - Updating room`, req.body);
   try {
     const { id } = req.params;
-    const { name, price, description, status } = req.body;
+    const { name, price, description, status, image_url } = req.body;
     
     // Validate input
     if (!name || !price) {
@@ -74,8 +74,8 @@ router.put('/:id', async (req, res) => {
     }
     
     const result = await pool.query(
-      'UPDATE rooms SET name = $1, price = $2, description = $3, status = $4 WHERE id = $5 RETURNING *',
-      [name, price, description, status, id]
+      'UPDATE rooms SET name = $1, price = $2, description = $3, status = $4, image_url = $5 WHERE id = $6 RETURNING *',
+      [name, price, description, status, image_url, id]
     );
     
     if (result.rows.length === 0) {

@@ -127,7 +127,7 @@ function UserDashboard() {
             <div className="modal-content">
               <h2>{selectedRoom.name}</h2>
               <img 
-                src={selectedRoom.image || defaultRoomImage} 
+                src={selectedRoom.image_url || defaultRoomImage} 
                 alt={selectedRoom.name} 
                 className="room-detail-image"
               />
@@ -210,7 +210,7 @@ function UserDashboard() {
             rooms.map(room => (
               <div className="card" key={room.id}>
                 <img 
-                  src={room.image || defaultRoomImage}
+                  src={room.image_url || defaultRoomImage}
                   alt={room.name} 
                 />
                 <div className="card-content">
