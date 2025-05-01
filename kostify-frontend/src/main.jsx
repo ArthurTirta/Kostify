@@ -12,6 +12,8 @@ import RegisterPage from './RegisterPage.jsx';
 import AdminDashboard from './AdminDashboard.jsx';
 import UserDashboard from './UserDashboard.jsx';
 import About from './about.jsx';
+import AdminDashboardDetail from './AdminDashboardDetail.jsx';
+import AdminDashboardTambah from './AdminDashboardTambah.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -25,7 +27,9 @@ createRoot(document.getElementById('root')).render(
         <Route path="/Authpage" element={<AuthPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/admindashboarddetail/:id" element={<AdminDashboardDetail />} />
         <Route path="/user-dashboard" element={<UserDashboard />} />
+        <Route path="/admindashboardtambah" element={<AdminDashboardTambah />} />
         <Route path="/about" element={<About />} />
       </Routes>
     </BrowserRouter>
