@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Navbar from './Navbar';
 import './index.css';
 
 function Dashboard() {
@@ -86,24 +87,7 @@ function Dashboard() {
   return (
     <div className="page-container">
       {/* Sidebar */}
-      <div className="sidebar">
-     
-        <div className="button-container">
-        <Link to="/dashboard">
-          <button>Dashboard</button>
-        </Link>
-        <Link to="/feedback">
-          <button>Feedback</button>
-        </Link>
-        <Link to="/laporan">
-          <button>Laporan Keuangan</button>
-        </Link>
-        <Link to="/about">
-          <button>About Us</button>
-        </Link>
-        </div>
-
-      </div>
+      <Navbar />
 
       {/* Main Content */}
       <div className="main-content">

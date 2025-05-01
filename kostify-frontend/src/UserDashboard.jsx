@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { AuthContext } from './AuthContext';
+import Navbar from './Navbar';
 import './index.css';
 
 // Define the base URL for API calls
@@ -22,6 +24,7 @@ function UserDashboard() {
   });
   
   const navigate = useNavigate();
+  const { logout } = useContext(AuthContext);
 
   // Fetch rooms from API
   useEffect(() => {
@@ -94,9 +97,9 @@ function UserDashboard() {
   };
   
   const handleLogout = () => {
-    // Clear user data and redirect to login
-    localStorage.removeItem('user');
-    navigate('/AuthPage');
+    logout(() => {
+      navigate('/AuthPage');
+    });
   };
   
   // Placeholder image for rooms without images
@@ -105,14 +108,7 @@ function UserDashboard() {
   return (
     <div className="page-container">
       {/* Sidebar */}
-      <div className="sidebar">
-        <h3>Menu Pengguna</h3>
-        <div className="button-container">
-          <button>Ruangan Tersedia</button>
-          <button>Pemesanan Saya</button>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-      </div>
+      <Navbar />
 
       {/* Main Content */}
       <div className="main-content">
@@ -230,10 +226,6 @@ function UserDashboard() {
             ))
           )}
         </div>
-
-        <Link to="/" className="link-back">
-          ⬅️ Kembali ke Halaman Utama
-        </Link>
       </div>
     </div>
   );

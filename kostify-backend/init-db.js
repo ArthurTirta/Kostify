@@ -64,6 +64,18 @@ async function initializeDatabase() {
         status VARCHAR(20) DEFAULT 'available' CHECK (status IN ('available', 'booked'))
       )
     `);
+    
+    // Create feedback table if not exists
+    await kostifyClient.query(`
+      CREATE TABLE IF NOT EXISTS feedback (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER,
+        user_name VARCHAR(100) NOT NULL,
+        comment TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
 
     // Check if rooms table is empty and seed initial data if needed
     const roomsCount = await kostifyClient.query('SELECT COUNT(*) FROM rooms');
@@ -76,6 +88,19 @@ async function initializeDatabase() {
         ('Ruangan 3', 450000, 'Kamar ekonomis dengan fasilitas standar', 'available')
       `);
       console.log('Initial room data seeded successfully');
+    }
+    
+    // Check if feedback table is empty and seed initial data if needed
+    const feedbackCount = await kostifyClient.query('SELECT COUNT(*) FROM feedback');
+    if (parseInt(feedbackCount.rows[0].count) === 0) {
+      console.log('Seeding initial feedback data...');
+      await kostifyClient.query(`
+        INSERT INTO feedback (user_name, comment) VALUES 
+        ('Admin User', 'Aplikasi ini sangat membantu untuk mengelola kost!'),
+        ('User Penyewa', 'Sistem pemesanan ruangan sangat mudah digunakan'),
+        ('Pengguna Umum', 'Tampilan aplikasi bagus, tapi perlu peningkatan fitur')
+      `);
+      console.log('Initial feedback data seeded successfully');
     }
 
     console.log('Database initialization completed');

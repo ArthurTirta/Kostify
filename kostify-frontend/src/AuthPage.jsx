@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "./AuthContext";
 import './AuthPage.css';
 
 const AuthPage = () => {
@@ -11,6 +11,7 @@ const AuthPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,33 +28,25 @@ const AuthPage = () => {
 
     setIsLoading(true);
     
-    try {
-      const response = await axios.post("http://localhost:3000/auth/login", {
-        username,
-        password,
-      });
-      
-      setSuccessMessage(response.data.message);
-      
-      // Save user data in localStorage
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      
-      // Redirect based on user role
-      if (response.data.user.role === 'admin') {
-        navigate('/admin-dashboard');
+    login(username, password, (success, userData) => {
+      if (success) {
+        setSuccessMessage("Login successful!");
+        
+        // Redirect based on user role
+        if (userData.role === 'admin') {
+          navigate('/admin-dashboard');
+        } else {
+          navigate('/user-dashboard');
+        }
       } else {
-        navigate('/user-dashboard');
+        setErrorMessage(
+          userData?.response 
+            ? userData.response.data.message || userData.response.data.error
+            : "Network error. Please try again later."
+        );
       }
-      
-    } catch (error) {
-      setErrorMessage(
-        error.response 
-          ? error.response.data.message || error.response.data.error
-          : "Network error. Please try again later."
-      );
-    } finally {
       setIsLoading(false);
-    }
+    });
   };
 
   return (
@@ -109,6 +102,10 @@ const AuthPage = () => {
           >
             {isLoading ? 'Logging in...' : 'Login'}
           </button>
+          
+          <Link to="/" className="back-button">
+            Kembali
+          </Link>
 
           <div className="auth-footer">
             <p>Don't have an account? <Link to="/register">Sign up</Link></p>

@@ -126,34 +126,12 @@ function App() {
 
         <div className="feedback-section">
           <h2>Apa Kata Pengguna Kami?</h2>
-          <div className="cards-container">
-            {feedbackCards.map((card, index) => (
-              <div 
-                key={card.id}
-                className={`feedback-card ${index === currentCard ? 'active' : ''}`}
-              >
-                <div className="card-header">
-                  <div className="user-avatar">{card.name.charAt(0)}</div>
-                  <div className="user-info">
-                    <h4>{card.name}</h4>
-                    <div className="rating">
-                      {Array(card.rating).fill().map((_, i) => (
-                        <span key={i}>★</span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <p className="card-comment">"{card.comment}"</p>
-              </div>
-            ))}
-            <div className="card-indicators">
-              {feedbackCards.map((_, index) => (
-                <span 
-                  key={index}
-                  className={`card-indicator ${index === currentCard ? 'active' : ''}`}
-                  onClick={() => setCurrentCard(index)}
-                ></span>
-              ))}
+          <div className="development-message">
+            <div className="message-container">
+              <h2>🚧 Fitur Dalam Pengembangan 🚧</h2>
+              <p>Mohon maaf, fitur testimoni saat ini sedang dalam tahap pengembangan.</p>
+              <p>Kami sedang bekerja untuk menyempurnakan fitur ini dan akan segera tersedia.</p>
+              <p>Terima kasih atas pengertian Anda.</p>
             </div>
           </div>
         </div>

@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { AuthContext } from './AuthContext';
+import Navbar from './Navbar';
 import './index.css';
 
 // Define the base URL for API calls
@@ -31,11 +33,23 @@ function AdminDashboard() {
   const editFileInputRef = useRef(null);
   
   const navigate = useNavigate();
+  const location = useLocation();
+  const { logout } = useContext(AuthContext);
 
   // Fetch rooms from API
   useEffect(() => {
     fetchRooms();
-  }, []);
+    
+    // Check if there's an action parameter in the URL
+    const queryParams = new URLSearchParams(location.search);
+    const action = queryParams.get('action');
+    
+    if (action === 'add-room') {
+      setShowAddForm(true);
+      // Clear the action parameter to avoid reopening the form on refresh
+      navigate('/admin-dashboard', { replace: true });
+    }
+  }, [location, navigate]);
   
   const fetchRooms = async () => {
     try {
@@ -114,9 +128,9 @@ function AdminDashboard() {
   };
   
   const handleLogout = () => {
-    // Clear user data and redirect to login
-    localStorage.removeItem('user');
-    navigate('/AuthPage');
+    logout(() => {
+      navigate('/AuthPage');
+    });
   };
   
   // Fungsi untuk menangani drag & drop
@@ -210,13 +224,7 @@ function AdminDashboard() {
   return (
     <div className="page-container">
       {/* Sidebar */}
-      <div className="sidebar">
-        <h3>Admin Panel</h3>
-        <div className="button-container">
-          <button onClick={() => setShowAddForm(true)}>+ Tambah Ruangan</button>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-      </div>
+      <Navbar />
 
       {/* Main Content */}
       <div className="main-content">
@@ -458,10 +466,6 @@ function AdminDashboard() {
             </table>
           )}
         </div>
-
-        <Link to="/" className="link-back">
-          ⬅️ Kembali ke Halaman Utama
-        </Link>
       </div>
     </div>
   );

@@ -735,3 +735,210 @@ body {
   border-radius: 5px;
   margin-bottom: 0.5rem;
 }
+
+/* About Us Styles */
+.about-content {
+  background-color: white;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.content-text {
+  margin: 20px 0;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+.edit-content-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.edit-content-btn:hover {
+  background-color: #0069d9;
+}
+
+.edit-about-container {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.edit-about-container textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.edit-about-container input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Common styles for both components */
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+/* Development message styles */
+.development-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px 0;
+}
+
+.message-container {
+  background-color: #fff3cd;
+  border: 2px dashed #ffc107;
+  border-radius: 10px;
+  padding: 30px;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.message-container h2 {
+  margin-top: 0;
+  color: #856404;
+  font-size: 24px;
+}
+
+.message-container p {
+  color: #333;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.message-container p:last-child {
+  margin-bottom: 0;
+}
+
+/* Feedback Styles */
+.feedback-form-container {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stars-container {
+  display: flex;
+  margin: 10px 0;
+}
+
+.star {
+  font-size: 24px;
+  color: #ccc;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.star.filled {
+  color: #ffc107;
+}
+
+.rating-container {
+  margin-bottom: 15px;
+}
+
+.feedback-list {
+  margin-top: 30px;
+}
+
+.feedback-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.feedback-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.feedback-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.comment {
+  margin: 10px 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.date {
+  font-size: 14px;
+  color: #6c757d;
+  margin-top: 5px;
+}
+
+.admin-actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.admin-actions button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.edit-feedback-form {
+  margin-top: 10px;
+}
+
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+.submit-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #218838;
+}
