@@ -42,7 +42,6 @@ function Dashboard() {
     fetchRooms();
   }, []);
 
-  // POST
   const handleAddUser = () => {
     if (!newNama.trim()) return;
     axios.post(usersApi, { nama: newNama })
@@ -52,12 +51,10 @@ function Dashboard() {
       });
   };
 
-  // DELETE
   const handleDelete = (id) => {
     axios.delete(`${usersApi}/${id}`).then(() => fetchUsers());
   };
 
-  // PUT
   const handleUpdate = () => {
     axios.put(`${usersApi}/${editId}`, { nama: editNama })
       .then(() => {

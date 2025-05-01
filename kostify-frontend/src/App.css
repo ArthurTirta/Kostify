@@ -9,7 +9,7 @@
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --transition: all 0.3s ease;
 }
-/* Variables */
+
 :root {
   --primary-color: #4361ee;
   --secondary-color: #3f37c9;
@@ -23,21 +23,18 @@
   --transition: all 0.3s ease;
 }
 
-/* Base Styles */
-
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
 }
 
-/* Auth Page Container */
 .auth-page {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-image: url('/assets/auth-bg.jpg'); /* Path to your background image */
+  background-image: url('/assets/auth-bg.jpg'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -55,7 +52,6 @@ body {
   z-index: 1;
 }
 
-/* Auth Container */
 .auth-container {
   position: relative;
   z-index: 2;
@@ -84,7 +80,6 @@ body {
   font-size: 0.9rem;
 }
 
-/* Form Styles */
 .auth-form {
   display: flex;
   flex-direction: column;
@@ -117,7 +112,6 @@ body {
   box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
 }
 
-/* Form Options */
 .form-options {
   display: flex;
   justify-content: space-between;
@@ -145,7 +139,6 @@ body {
   text-decoration: underline;
 }
 
-/* Submit Button */
 .submit-button {
   background-color: var(--primary-color);
   color: white;
@@ -169,7 +162,6 @@ body {
   transform: none;
 }
 
-/* Messages */
 .message {
   padding: 0.8rem 1rem;
   border-radius: var(--border-radius);
@@ -189,7 +181,6 @@ body {
   border: 1px solid rgba(75, 181, 67, 0.3);
 }
 
-/* Auth Footer */
 .auth-footer {
   text-align: center;
   margin-top: 1rem;
@@ -207,7 +198,6 @@ body {
   text-decoration: underline;
 }
 
-/* Responsive Design */
 @media (max-width: 480px) {
   .auth-container {
     padding: 1.5rem;
@@ -218,7 +208,6 @@ body {
     font-size: 1.5rem;
   }
 }
-
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -233,7 +222,6 @@ body {
   min-height: 100vh;
 }
 
-/* Navigation */
 .navbar {
   background-color: #EEE9DE;
   box-shadow: var(--shadow);
@@ -278,7 +266,6 @@ body {
   background-color: rgba(52, 152, 219, 0.1);
 }
 
-/* Main Content */
 .main-contentlp {
   flex: 1;
   max-width: 1200px;
@@ -287,7 +274,6 @@ body {
   width: 100%;
 }
 
-/* Hero Section */
 .hero-section {
   display: flex;
   align-items: center;
@@ -368,7 +354,6 @@ body {
   transform: scale(1.2);
 }
 
-/* Description Section */
 .description-section {
   margin: 3rem 0;
   text-align: center;
@@ -413,7 +398,6 @@ body {
   color: var(--primary-color);
 }
 
-/* Feedback Section */
 .feedback-section {
   margin: 4rem 0;
   text-align: center;
@@ -514,7 +498,6 @@ body {
   transform: scale(1.2);
 }
 
-/* Footer */
 .footer {
   background-color: var(--dark-color);
   color: white;
@@ -573,7 +556,6 @@ body {
   margin-top: 2rem;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .nav-container {
     flex-direction: column;
