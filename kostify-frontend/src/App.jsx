@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Feedback from './feedback.jsx';
 import './App.css';
 
 function App() {
-  // Main slideshow images
   const slides = [
     '/gambar1.jpg',
     '/gambar2.jpg',
     '/gambar3.jpg',
   ];
   
-  // Feedback cards data
   const feedbackCards = [
     {
       id: 1,

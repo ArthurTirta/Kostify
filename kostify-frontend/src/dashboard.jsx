@@ -11,7 +11,6 @@ function Dashboard() {
 
   const api = 'http://localhost:3000/users';
 
-  // GET
   const fetchUsers = () => {
     axios.get(api)
       .then(res => setUsers(res.data))
@@ -22,7 +21,6 @@ function Dashboard() {
     fetchUsers();
   }, []);
 
-  // POST
   const handleAddUser = () => {
     if (!newNama.trim()) return;
     axios.post(api, { nama: newNama })
@@ -32,12 +30,10 @@ function Dashboard() {
       });
   };
 
-  // DELETE
   const handleDelete = (id) => {
     axios.delete(`${api}/${id}`).then(() => fetchUsers());
   };
 
-  // PUT
   const handleUpdate = () => {
     axios.put(`${api}/${editId}`, { nama: editNama })
       .then(() => {
