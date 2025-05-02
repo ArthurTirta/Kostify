@@ -12,7 +12,8 @@ import AdminDashboard from './AdminDashboard.jsx';
 import UserDashboard from './UserDashboard.jsx';
 import About from './about.jsx';
 import AdminAbout from './AdminAbout.jsx';
-import Feedback from './Feedback.jsx';
+import Feedback from './feedback.jsx';
+import SimpleTester from './simpletester.jsx';
 import AuthProvider from './AuthContext.jsx';
 
 // Komponen wrapper dengan AuthProvider dan useNavigate
@@ -24,6 +25,7 @@ const AuthWrapper = () => {
       <Route path="/ruangan" element={<Ruangan />} />
       <Route path="/laporan" element={<LaporanKeuangan />} />
       <Route path="/feedback" element={<Feedback />} />
+      <Route path="/test-feedback" element={<SimpleTester />} />
       <Route path="/Authpage" element={<AuthPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/admin-dashboard" element={<AdminDashboard />} />

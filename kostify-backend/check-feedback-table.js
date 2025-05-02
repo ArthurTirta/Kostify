@@ -35,6 +35,7 @@ async function checkFeedbackTable() {
           user_id INTEGER,
           user_name VARCHAR(100) NOT NULL,
           comment TEXT NOT NULL,
+          rating INTEGER CHECK (rating >= 1 AND rating <= 5),
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
@@ -44,10 +45,10 @@ async function checkFeedbackTable() {
       // Add some initial feedback for testing
       console.log('Adding initial feedback data...');
       await client.query(`
-        INSERT INTO feedback (user_name, comment) VALUES 
-        ('Admin User', 'Aplikasi ini sangat membantu untuk mengelola kost!'),
-        ('User Penyewa', 'Sistem pemesanan ruangan sangat mudah digunakan'),
-        ('Pengguna Umum', 'Tampilan aplikasi bagus, tapi perlu peningkatan fitur')
+        INSERT INTO feedback (user_name, comment, rating) VALUES 
+        ('Admin User', 'Aplikasi ini sangat membantu untuk mengelola kost!', 5),
+        ('User Penyewa', 'Sistem pemesanan ruangan sangat mudah digunakan', 4),
+        ('Pengguna Umum', 'Tampilan aplikasi bagus, tapi perlu peningkatan fitur', 3)
       `);
       console.log('Initial feedback data added successfully');
     } else {

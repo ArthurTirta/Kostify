@@ -6,6 +6,7 @@ const authRoutes = require('./routes/auth');
 const roomsRoutes = require('./routes/rooms');
 const uploadRoutes = require('./routes/upload');
 const feedbackRoutes = require('./routes/feedback');
+const simpleFeedbackRoutes = require('./routes/simple-feedback');
 const aboutUsRoutes = require('./routes/aboutUs');
 const path = require('path');
 const fs = require('fs');
@@ -35,6 +36,7 @@ app.use('/auth', authRoutes);
 app.use('/rooms', roomsRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/feedback', feedbackRoutes);
+app.use('/simple-feedback', simpleFeedbackRoutes);
 app.use('/about', aboutUsRoutes);
 
 app.get('/', (req, res) => {
