@@ -139,9 +139,9 @@
     color: #555;
   }
   
-  .price-input input {
+  /* .price-input input {
     padding-left: 30px;
-  }
+  } */
   
   .form-actions {
     text-align: right;

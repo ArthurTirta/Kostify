@@ -37,40 +37,31 @@ const AdminDashboardTambah = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    // Validasi input
-    if (!newRoom.name || !newRoom.price) {
-      setError('Nama dan harga ruangan harus diisi');
-      return;
-    }
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+  if (!newRoom.name || !newRoom.price) {
+    setError('Nama dan harga ruangan harus diisi');
+    return;
+  }
+
 
     try {
       setLoading(true);
       setError(null);
 
       // Membuat FormData untuk mengunggah file
-      const formData = new FormData();
-      formData.append('name', newRoom.name);
-      formData.append('price', newRoom.price);
-      formData.append('description', newRoom.description);
-      formData.append('status', newRoom.status);
-      if (newRoom.image) {
-        formData.append('image', newRoom.image);
-      }
-
-      const response = await axios.post(`${API_BASE_URL}/rooms`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+      const response = await axios.post(`${API_BASE_URL}/rooms`, {
+        name: newRoom.name,
+        price: newRoom.price,
+        description: newRoom.description,
+        status: newRoom.status
       });
-
+  
       alert('Ruangan berhasil ditambahkan!');
-      navigate('/rooms'); // Redirect ke halaman daftar ruangan
+      navigate('/rooms');
     } catch (err) {
       setError(err.response?.data?.error || err.message);
-      console.error('Error adding room:', err);
     } finally {
       setLoading(false);
     }

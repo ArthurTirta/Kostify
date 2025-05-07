@@ -85,18 +85,12 @@ const Dashboard = () => {
                   </p>
                 </div>
                 <div className="card-footer">
-                  <button 
-                    className="view-details-btn"
-                    onClick={() => handleRoomClick(room.id)}
-                  >
-                    View Details
-                  </button>
-                  <button 
+                 <button 
                     className="edit-btn"
                     onClick={() => navigate(`/AdminDashboardDetail/${room.id}`)}
                     // navigate(`/AdminDashboardDetail/${room.id}`)}
                   >
-                    Edit
+                    Telusuri
                   </button>
                 </div>
               </div>
