@@ -44,7 +44,7 @@ Unit test adalah proses pengujian terhadap kode program, seperti fungsi atau met
 
 - authpage
 
-dibagian login page ini, tampilan belum maksimal dan masih perlu peningkatan seperti visual, color palette, dan ketentuan password (minimal 8-10 huruf, terdapat huruf besar, angka, dan simbol). mungkin juga bisa menambahkan email pada pengguna agar ketika pengguna lupa password bisa me-recovery melalui email.
+dibagian login page ini, tampilan belum maksimal dan masih perlu peningkatan seperti visual, color palette, dan ketentuan password (minimal 8-10 huruf, terdapat huruf besar, angka, dan simbol). 5
 
 - dashboard
 
