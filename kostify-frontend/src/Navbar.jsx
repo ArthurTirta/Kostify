@@ -21,9 +21,10 @@ function Navbar() {
         <div className="button-container">
           <Link to="/admin-dashboard"><button>Dashboard</button></Link>
           <Link to="/admin-dashboard?action=add-room"><button>+ Tambah Ruangan</button></Link>
-          <Link to="/laporan"><button>Laporan Keuangan</button></Link>
+          <Link to="/laporan-keuangan"><button>Laporan Keuangan</button></Link>
           <Link to="/feedback"><button>Feedback</button></Link>
           <Link to="/admin-about"><button>Edit About Us</button></Link>
+          <Link to="/user-management"><button>Kelola Pengguna</button></Link>
           <button onClick={handleLogout}>Logout</button>
         </div>
       </div>

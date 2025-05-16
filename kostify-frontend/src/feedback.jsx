@@ -6,7 +6,7 @@ import Navbar from './Navbar';
 import './index.css';
 
 // API URL
-const API_URL = 'http://localhost:3001';
+const API_URL = 'http://localhost:3000';
 
 function Feedback() {
   // State variables

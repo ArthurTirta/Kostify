@@ -102,19 +102,6 @@ const RegisterPage = () => {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="role">Peran</label>
-            <select
-              id="role"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="form-input"
-            >
-              <option value="penyewa">Penyewa</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
-
           <button 
             type="submit" 
             className="submit-button"

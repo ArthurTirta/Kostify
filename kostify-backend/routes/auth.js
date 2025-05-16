@@ -25,6 +25,15 @@ const verifyToken = (req, res, next) => {
   }
 };
 
+// Admin middleware
+const isAdmin = (req, res, next) => {
+  if (req.user && req.user.role === 'admin') {
+    next();
+  } else {
+    res.status(403).json({ error: 'Akses ditolak, memerlukan hak akses admin' });
+  }
+};
+
 // REGISTER
 router.post('/register', async (req, res) => {
   const { username, password, role } = req.body;
@@ -87,6 +96,59 @@ router.get('/profile', verifyToken, async (req, res) => {
       user: result.rows[0] 
     });
   } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Debug endpoint - get all users (no auth required)
+router.get('/all-users', async (req, res) => {
+  console.log('Debug: Getting all users without auth');
+  try {
+    const result = await pool.query('SELECT id, username, role FROM users');
+    console.log('Found users:', result.rows);
+    res.json({ users: result.rows });
+  } catch (err) {
+    console.error('Error fetching users:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get all users (admin only)
+router.get('/users', verifyToken, isAdmin, async (req, res) => {
+  console.log('Fetching all users - request from:', req.user);
+  try {
+    const result = await pool.query('SELECT id, username, role FROM users');
+    console.log('Found users:', result.rows.length);
+    res.json({ users: result.rows });
+  } catch (err) {
+    console.error('Error fetching users:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Delete a user (admin only)
+router.delete('/users/:id', verifyToken, isAdmin, async (req, res) => {
+  console.log('Deleting user ID:', req.params.id);
+  try {
+    const userId = req.params.id;
+    
+    // Prevent admin from deleting their own account
+    if (parseInt(userId) === req.user.userId) {
+      return res.status(400).json({ error: 'Tidak dapat menghapus akun Anda sendiri' });
+    }
+    
+    const result = await pool.query('DELETE FROM users WHERE id = $1 RETURNING *', [userId]);
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'User tidak ditemukan' });
+    }
+    
+    res.json({ 
+      message: 'User berhasil dihapus', 
+      user: result.rows[0] 
+    });
+  } catch (err) {
+    console.error('Error deleting user:', err);
     res.status(500).json({ error: err.message });
   }
 });

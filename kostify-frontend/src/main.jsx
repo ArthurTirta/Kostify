@@ -5,7 +5,9 @@ import './index.css';
 import App from './App.jsx';
 import Dashboard from './dashboard.jsx';
 import Ruangan from './ruangan.jsx';
-import LaporanKeuangan from './laporan.jsx';
+import LaporanKeuangan from './LaporanKeuangan.jsx';
+import LaporanKeuanganAdd from './LaporanKeuanganAdd.jsx';
+import LaporanKeuanganEdit from './LaporanKeuanganEdit.jsx';
 import AuthPage from './AuthPage.jsx';
 import RegisterPage from './RegisterPage.jsx';
 import AdminDashboard from './AdminDashboard.jsx';
@@ -14,6 +16,7 @@ import About from './about.jsx';
 import AdminAbout from './AdminAbout.jsx';
 import Feedback from './feedback.jsx';
 import SimpleTester from './simpletester.jsx';
+import UserManagement from './UserManagement.jsx';
 import AuthProvider from './AuthContext.jsx';
 
 // Komponen wrapper dengan AuthProvider dan useNavigate
@@ -24,6 +27,9 @@ const AuthWrapper = () => {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/ruangan" element={<Ruangan />} />
       <Route path="/laporan" element={<LaporanKeuangan />} />
+      <Route path="/laporan-keuangan" element={<LaporanKeuangan />} />
+      <Route path="/laporan-keuangan/add" element={<LaporanKeuanganAdd />} />
+      <Route path="/laporan-keuangan/edit/:id" element={<LaporanKeuanganEdit />} />
       <Route path="/feedback" element={<Feedback />} />
       <Route path="/test-feedback" element={<SimpleTester />} />
       <Route path="/Authpage" element={<AuthPage />} />
@@ -32,6 +38,7 @@ const AuthWrapper = () => {
       <Route path="/user-dashboard" element={<UserDashboard />} />
       <Route path="/about" element={<About />} />
       <Route path="/admin-about" element={<AdminAbout />} />
+      <Route path="/user-management" element={<UserManagement />} />
     </Routes>
   );
 };
