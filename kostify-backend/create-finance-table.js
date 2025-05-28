@@ -123,6 +123,40 @@ async function createFinanceTable() {
         console.log('Migration completed successfully');
       }
       
+      // Check if user_id and room_id columns exist
+      const userRoomColumnCheck = await client.query(`
+        SELECT 
+          EXISTS (SELECT FROM information_schema.columns WHERE table_name = 'finance_reports' AND column_name = 'user_id') as has_user_id,
+          EXISTS (SELECT FROM information_schema.columns WHERE table_name = 'finance_reports' AND column_name = 'room_id') as has_room_id
+      `);
+      
+      const hasUserIdColumn = userRoomColumnCheck.rows[0].has_user_id;
+      const hasRoomIdColumn = userRoomColumnCheck.rows[0].has_room_id;
+      
+      if (!hasUserIdColumn || !hasRoomIdColumn) {
+        console.log('Migrating finance_reports table to add user_id and room_id columns...');
+        
+        // Add user_id column if it doesn't exist
+        if (!hasUserIdColumn) {
+          await client.query(`
+            ALTER TABLE finance_reports
+            ADD COLUMN user_id INTEGER REFERENCES users(id) ON DELETE SET NULL
+          `);
+          console.log('Added user_id column');
+        }
+        
+        // Add room_id column if it doesn't exist
+        if (!hasRoomIdColumn) {
+          await client.query(`
+            ALTER TABLE finance_reports
+            ADD COLUMN room_id INTEGER REFERENCES rooms(id) ON DELETE SET NULL
+          `);
+          console.log('Added room_id column');
+        }
+        
+        console.log('User and room columns migration completed successfully');
+      }
+      
       // Check the table structure
       const schemaResult = await client.query(`
         SELECT column_name, data_type, is_nullable 
