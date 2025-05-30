@@ -49,7 +49,7 @@ router.post('/', async (req, res) => {
     
     const result = await pool.query(
       'INSERT INTO rooms (name, price, description, status, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [name, price, description, status || 'available', image_url || 'https://plus.unsplash.com/premium_photo-1684164601278-3063c81f17dc?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cm9vbXxlbnwwfHwwfHx8MA%3D%3D']
+      [name, price, description, status || 'available', image_url || '']
     );
     
     console.log(`Created room: ${JSON.stringify(result.rows[0])}`);
