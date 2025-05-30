@@ -113,9 +113,25 @@ router.delete('/:id', async (req, res) => {
 
 // Book a room
 router.patch('/:id/book', async (req, res) => {
-  console.log(`PATCH /rooms/${req.params.id}/book - Booking room`);
+  console.log(`PATCH /rooms/${req.params.id}/book - Booking room`, req.body);
   try {
     const { id } = req.params;
+    const { name, phone, startDate, duration, userId } = req.body;
+    
+    // Debug logging
+    console.log("Booking Details:");
+    console.log(" - Room ID:", id);
+    console.log(" - Tenant Name:", name);
+    console.log(" - Phone:", phone);
+    console.log(" - Start Date:", startDate);
+    console.log(" - Duration:", duration);
+    console.log(" - User ID:", userId);
+    
+    // Validate input
+    if (!name || !phone || !startDate) {
+      console.log('Missing required booking fields');
+      return res.status(400).json({ error: 'Semua data pemesanan harus diisi' });
+    }
     
     // Check if room exists and is available
     const checkRoom = await pool.query('SELECT * FROM rooms WHERE id = $1', [id]);
@@ -130,18 +146,172 @@ router.patch('/:id/book', async (req, res) => {
       return res.status(400).json({ error: 'Ruangan sudah dipesan' });
     }
     
-    // Update room status to booked
-    const result = await pool.query(
-      'UPDATE rooms SET status = $1 WHERE id = $2 RETURNING *',
-      ['booked', id]
-    );
+    // Check if bookings table exists
+    const tableCheck = await pool.query(`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables 
+        WHERE table_schema = 'public'
+        AND table_name = 'bookings'
+      );
+    `);
     
-    console.log(`Booked room: ${JSON.stringify(result.rows[0])}`);
-    res.json({ message: 'Ruangan berhasil dipesan', room: result.rows[0] });
+    if (!tableCheck.rows[0].exists) {
+      console.log('Bookings table does not exist, creating it now...');
+      await require('../migrations/007_create_bookings_table');
+    } else {
+      console.log('Bookings table exists, proceeding with insertion');
+    }
+    
+    // Start a transaction
+    await pool.query('BEGIN');
+    
+    try {
+      // Update room status to booked
+      const roomResult = await pool.query(
+        'UPDATE rooms SET status = $1 WHERE id = $2 RETURNING *',
+        ['booked', id]
+      );
+      
+      // Store booking details
+      const bookingResult = await pool.query(
+        'INSERT INTO bookings(room_id, user_id, tenant_name, phone_number, start_date, duration) VALUES($1, $2, $3, $4, $5, $6) RETURNING id',
+        [id, userId || null, name, phone, startDate, duration]
+      );
+      
+      console.log('Successfully inserted booking:', bookingResult.rows[0]);
+      
+      // Commit the transaction
+      await pool.query('COMMIT');
+      
+      console.log(`Booked room: ${JSON.stringify(roomResult.rows[0])}`);
+      console.log(`Created booking with ID: ${bookingResult.rows[0].id}`);
+      
+      res.json({ 
+        message: 'Ruangan berhasil dipesan', 
+        room: roomResult.rows[0],
+        bookingId: bookingResult.rows[0].id
+      });
+    } catch (err) {
+      // Rollback in case of error
+      await pool.query('ROLLBACK');
+      throw err;
+    }
   } catch (err) {
     console.error(`Error booking room ${req.params.id}:`, err);
     res.status(500).json({ error: err.message });
   }
 });
 
-module.exports = router; 
+// Get booking details by room ID
+router.get('/:id/booking', async (req, res) => {
+  console.log(`GET /rooms/${req.params.id}/booking - Fetching booking details`);
+  try {
+    const { id } = req.params;
+    
+    // Check if bookings table exists
+    const tableCheck = await pool.query(`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables 
+        WHERE table_schema = 'public'
+        AND table_name = 'bookings'
+      );
+    `);
+    
+    if (!tableCheck.rows[0].exists) {
+      console.log('Bookings table does not exist!');
+      return res.status(404).json({ error: 'Tabel pemesanan belum dibuat' });
+    }
+    
+    console.log(`Querying booking details for room ID ${id}`);
+    
+    // Get the room data first to check if it's really booked
+    const roomCheck = await pool.query('SELECT * FROM rooms WHERE id = $1', [id]);
+    
+    if (roomCheck.rows.length === 0) {
+      console.log(`Room with ID ${id} not found`);
+      return res.status(404).json({ error: 'Ruangan tidak ditemukan' });
+    }
+    
+    if (roomCheck.rows[0].status !== 'booked') {
+      console.log(`Room with ID ${id} is not booked`);
+      return res.status(400).json({ error: 'Ruangan tidak dalam status terpesan' });
+    }
+    
+    console.log(`Room status confirmed as booked, querying booking details`);
+    
+    // Query booking details with user information if available
+    const result = await pool.query(`
+      SELECT b.*, u.username
+      FROM bookings b
+      LEFT JOIN users u ON b.user_id = u.id
+      WHERE b.room_id = $1
+      ORDER BY b.created_at DESC
+      LIMIT 1
+    `, [id]);
+    
+    if (result.rows.length === 0) {
+      console.log(`No booking found for room ID ${id} - this is unexpected for a booked room`);
+      
+      // Check if there are any bookings at all
+      const allBookings = await pool.query('SELECT COUNT(*) FROM bookings');
+      console.log(`Total bookings in database: ${allBookings.rows[0].count}`);
+      
+      return res.status(404).json({ error: 'Data pemesanan tidak ditemukan' });
+    }
+    
+    console.log(`Found booking details for room ${id}:`, result.rows[0]);
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(`Error fetching booking details for room ${req.params.id}:`, err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Delete booking for a room
+router.delete('/:id/booking', async (req, res) => {
+  console.log(`DELETE /rooms/${req.params.id}/booking - Deleting booking for room`);
+  try {
+    const { id } = req.params;
+    
+    // Start a transaction
+    await pool.query('BEGIN');
+    
+    try {
+      // Find the booking first
+      const bookingResult = await pool.query('SELECT * FROM bookings WHERE room_id = $1', [id]);
+      
+      if (bookingResult.rows.length === 0) {
+        await pool.query('ROLLBACK');
+        console.log(`No booking found for room ID ${id}`);
+        return res.status(404).json({ error: 'Data pemesanan tidak ditemukan' });
+      }
+      
+      const booking = bookingResult.rows[0];
+      
+      // Delete the booking
+      await pool.query('DELETE FROM bookings WHERE room_id = $1', [id]);
+      console.log(`Deleted booking for room ID ${id}`);
+      
+      // Update the room status to available
+      await pool.query('UPDATE rooms SET status = $1 WHERE id = $2', ['available', id]);
+      console.log(`Updated room ID ${id} status to available`);
+      
+      // Commit the transaction
+      await pool.query('COMMIT');
+      
+      res.json({ 
+        message: 'Pemesanan berhasil dihapus',
+        deletedBooking: booking
+      });
+    } catch (err) {
+      // Rollback in case of error
+      await pool.query('ROLLBACK');
+      throw err;
+    }
+  } catch (err) {
+    console.error(`Error deleting booking for room ${req.params.id}:`, err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+module.exports = router;

@@ -276,6 +276,86 @@ console.log('- GET /debug/users - Debug endpoint for user management');
 console.log('- GET /api/users - Alternative endpoint for user management');
 console.log('- GET /users - Database data endpoint');
 
+// Run migrations and database validation
+const runMigrations = async () => {
+  try {
+    // Create bookings table if it doesn't exist
+    require('./migrations/007_create_bookings_table');
+    console.log('Migrations completed successfully');
+    
+    // Validate and fix database inconsistencies
+    await validateAndFixDatabase();
+  } catch (err) {
+    console.error('Migration or database validation failed:', err);
+  }
+};
+
+// Database validation function
+async function validateAndFixDatabase() {
+  try {
+    console.log('Validating database consistency...');
+    
+    const pool = require('./db');
+    
+    // Find and fix rooms marked as booked but without booking entries
+    const inconsistentRooms = await pool.query(`
+      SELECT r.id, r.name 
+      FROM rooms r 
+      LEFT JOIN bookings b ON r.id = b.room_id
+      WHERE r.status = 'booked' AND b.id IS NULL
+    `);
+    
+    if (inconsistentRooms.rows.length > 0) {
+      console.log(`Found ${inconsistentRooms.rows.length} inconsistent rooms. Fixing...`);
+      
+      for (const room of inconsistentRooms.rows) {
+        await pool.query("UPDATE rooms SET status = 'available' WHERE id = $1", [room.id]);
+        console.log(`- Room ${room.id} (${room.name}) status updated to 'available'`);
+      }
+    } else {
+      console.log('No inconsistencies found in room bookings.');
+    }
+    
+    // Create trigger to maintain consistency if it doesn't exist
+    const triggerExists = await pool.query(`
+      SELECT EXISTS (
+        SELECT 1 
+        FROM pg_trigger 
+        WHERE tgname = 'update_room_status_on_booking_delete'
+      );
+    `);
+    
+    if (!triggerExists.rows[0].exists) {
+      // Create trigger function and trigger
+      await pool.query(`
+        CREATE OR REPLACE FUNCTION update_room_status_on_booking()
+        RETURNS TRIGGER AS $$
+        BEGIN
+          IF (TG_OP = 'DELETE') THEN
+            UPDATE rooms SET status = 'available' WHERE id = OLD.room_id;
+            RETURN OLD;
+          END IF;
+          RETURN NULL;
+        END;
+        $$ LANGUAGE plpgsql;
+        
+        CREATE TRIGGER update_room_status_on_booking_delete
+        AFTER DELETE ON bookings
+        FOR EACH ROW
+        EXECUTE FUNCTION update_room_status_on_booking();
+      `);
+      
+      console.log('Database trigger created to maintain consistency.');
+    }
+    
+    console.log('Database validation completed.');
+  } catch (err) {
+    console.error('Database validation error:', err);
+  }
+}
+
+runMigrations();
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

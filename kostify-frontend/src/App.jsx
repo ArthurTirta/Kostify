@@ -68,11 +68,11 @@ function App() {
         <div className="nav-container">
           <img id="logo" src="/logokos.jpg" alt="Logo" className="logo" />
           <ul className="nav-links">
-            <li><Link to="/dashboard" className="nav-link">Dashboard</Link></li>
+            
             {/* <li><Link to="/ruangan" className="nav-link">Ruangan</Link></li>
             <li><Link to="/laporan" className="nav-link">Laporan Keuangan</Link></li>
             <li><Link to="/feedback" className="nav-link">Feedback</Link></li> */}
-            <li><Link to="/AuthPage" className="nav-link">AuthPage</Link></li>
+            <li><Link to="/AuthPage" className="nav-link">Login</Link></li>
             {/* <li><Link to="/about" className="nav-link">About Us</Link></li> */}
           </ul>
         </div>

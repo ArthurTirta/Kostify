@@ -30,16 +30,14 @@ function Navbar() {
       </div>
     );
   }
-  
-  // Navbar for tenant users
+    // Navbar for tenant users
   if (auth && auth.role === 'penyewa') {
     return (
       <div className="sidebar">
         <h3>Menu Pengguna</h3>
         <div className="button-container">
           <Link to="/user-dashboard"><button>Ruangan Tersedia</button></Link>
-          <button>Pemesanan Saya</button>
-          <Link to="/laporan"><button>Laporan Keuangan</button></Link>
+          <Link to="/user-laporan-keuangan"><button>Laporan Keuangan</button></Link>
           <Link to="/feedback"><button>Feedback</button></Link>
           <Link to="/about"><button>About Us</button></Link>
           <button onClick={handleLogout}>Logout</button>
@@ -62,4 +60,4 @@ function Navbar() {
   );
 }
 
-export default Navbar; 
+export default Navbar;

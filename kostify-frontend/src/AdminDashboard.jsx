@@ -12,10 +12,17 @@ function AdminDashboard() {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [userCount, setUserCount] = useState(0);
+  const [roomCount, setRoomCount] = useState(0);
   
   const [showAddForm, setShowAddForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [currentRoom, setCurrentRoom] = useState(null);
+  
+  // New state for booking details
+  const [showBookingDetailsModal, setShowBookingDetailsModal] = useState(false);
+  const [bookingDetails, setBookingDetails] = useState(null);
+  const [loadingBookingDetails, setLoadingBookingDetails] = useState(false);
   
   const [newRoom, setNewRoom] = useState({
     name: '',
@@ -34,11 +41,10 @@ function AdminDashboard() {
   
   const navigate = useNavigate();
   const location = useLocation();
-  const { logout } = useContext(AuthContext);
-
-  // Fetch rooms from API
+  const { logout } = useContext(AuthContext);  // Fetch rooms and user count from API
   useEffect(() => {
     fetchRooms();
+    fetchUserCount();
     
     // Check if there's an action parameter in the URL
     const queryParams = new URLSearchParams(location.search);
@@ -58,6 +64,7 @@ function AdminDashboard() {
       const response = await axios.get(`${API_BASE_URL}/rooms`);
       console.log('Response:', response.data);
       setRooms(response.data);
+      setRoomCount(response.data.length); // Set room count here
       setError(null);
     } catch (err) {
       console.error('Error details:', err);
@@ -65,6 +72,30 @@ function AdminDashboard() {
       console.error('Error fetching rooms:', err);
     } finally {
       setLoading(false);
+    }
+  };
+  
+  const fetchUserCount = async () => {
+    try {
+      // Get JWT token from localStorage
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error('No token found, cannot fetch user count');
+        return;
+      }
+      
+      const response = await axios.get(`${API_BASE_URL}/auth/users`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      
+      if (response.data && response.data.users) {
+        setUserCount(response.data.users.length);
+      }
+    } catch (err) {
+      console.error('Error fetching user count:', err);
+      // Don't set an error state here to avoid disrupting the UI if this fails
     }
   };
   
@@ -124,6 +155,26 @@ function AdminDashboard() {
         alert('Error deleting room: ' + (err.response?.data?.error || err.message));
         console.error('Error deleting room:', err);
       }
+    }
+  };
+  // Function to handle view booking details
+  const handleViewBookingDetails = async (roomId) => {
+    try {
+      setLoadingBookingDetails(true);
+      console.log(`Fetching booking details for room ID: ${roomId}`);
+      const response = await axios.get(`${API_BASE_URL}/rooms/${roomId}/booking`);
+      console.log('Booking details response:', response.data);
+      setBookingDetails({...response.data, room_id: roomId});
+      setShowBookingDetailsModal(true);
+    } catch (err) {
+      console.error('Error fetching booking details:', err);
+      if (err.response && err.response.status === 404) {
+        alert('Tidak ada data pemesanan untuk ruangan ini.');
+      } else {
+        alert('Error fetching booking details: ' + (err.response?.data?.error || err.message));
+      }
+    } finally {
+      setLoadingBookingDetails(false);
     }
   };
   
@@ -232,6 +283,29 @@ function AdminDashboard() {
         <p>Kelola ruangan dan lihat status pemesanan</p>
 
         {error && <div className="error-message">{error}</div>}
+
+        {/* Summary Cards */}
+        <div className="summary-cards">
+          <div className="summary-card">
+            <div className="summary-icon user-icon">
+              <i className="fas fa-users"></i>
+            </div>
+            <div className="summary-details">
+              <h3>Total Pengguna</h3>
+              <p className="summary-count">{userCount}</p>
+            </div>
+          </div>
+
+          <div className="summary-card">
+            <div className="summary-icon room-icon">
+              <i className="fas fa-door-open"></i>
+            </div>
+            <div className="summary-details">
+              <h3>Total Ruangan</h3>
+              <p className="summary-count">{roomCount}</p>
+            </div>
+          </div>
+        </div>
 
         {/* Add Room Form */}
         {showAddForm && (
@@ -454,21 +528,66 @@ function AdminDashboard() {
                         <span className={`status-badge ${room.status}`}>
                           {room.status === 'available' ? 'Tersedia' : 'Terpesan'}
                         </span>
-                      </td>
-                      <td>
+                      </td>                      <td className="action-buttons">
                         <button onClick={() => handleEditClick(room)} className="edit-btn">Edit</button>
                         <button onClick={() => handleDeleteRoom(room.id)} className="delete-btn">Hapus</button>
+                        {room.status === 'booked' && (
+                          <button onClick={() => handleViewBookingDetails(room.id)} className="view-booking-btn">Lihat Detail</button>
+                        )}
                       </td>
                     </tr>
                   ))
                 )}
               </tbody>
             </table>
-          )}
-        </div>
+          )}        </div>
+          {/* Booking Details Modal */}
+        {showBookingDetailsModal && (
+          <div className="modal-overlay">
+            <div className="modal-content booking-details-modal">
+              <h2>Detail Pemesanan</h2>
+              
+              {loadingBookingDetails ? (
+                <p>Loading booking details...</p>
+              ) : bookingDetails ? (
+                <div className="booking-details-content">
+                  <div className="detail-item">
+                    <span className="detail-label">Nama Penyewa:</span>
+                    <span className="detail-value">{bookingDetails.tenant_name}</span>
+                  </div>
+                  {bookingDetails.username && (
+                    <div className="detail-item">
+                      <span className="detail-label">Username:</span>
+                      <span className="detail-value">{bookingDetails.username}</span>
+                    </div>
+                  )}
+                  <div className="detail-item">
+                    <span className="detail-label">Nomor Telepon:</span>
+                    <span className="detail-value">{bookingDetails.phone_number}</span>
+                  </div>
+                  <div className="detail-item">
+                    <span className="detail-label">Tanggal Mulai Sewa:</span>
+                    <span className="detail-value">{new Date(bookingDetails.start_date).toLocaleDateString('id-ID')}</span>
+                  </div>
+                  <div className="detail-item">
+                    <span className="detail-label">Durasi Sewa:</span>
+                    <span className="detail-value">{bookingDetails.duration} bulan</span>
+                  </div>
+                </div>
+              ) : (
+                <p>No booking details found.</p>
+              )}              <div className="modal-actions">
+                <button onClick={() => {
+                  setShowBookingDetailsModal(false);
+                  setTimeout(() => setBookingDetails(null), 300); // Reset booking details after modal animation
+                }} className="close-btn">Tutup</button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
-export default AdminDashboard; 
+export default AdminDashboard;

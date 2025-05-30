@@ -12,12 +12,18 @@ function LaporanKeuanganAdd() {
     tahun: currentYear,
     tanggal: '',
     status: 'Belum Lunas',
-    bukti_foto: null
+    bukti_foto: null,
+    user_id: '',
+    room_id: ''
   });
   
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [rooms, setRooms] = useState([]);
+  const [loadingUsers, setLoadingUsers] = useState(false);
+  const [loadingRooms, setLoadingRooms] = useState(false);
   
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -47,6 +53,55 @@ function LaporanKeuanganAdd() {
       navigate('/dashboard');
     }
   }, [auth, navigate]);
+
+  // Fetch users and rooms for dropdowns
+  useEffect(() => {
+    const fetchUsers = async () => {
+      setLoadingUsers(true);
+      try {
+        // Get the auth token from localStorage
+        const token = localStorage.getItem('token');
+        
+        if (!token) {
+          console.error('No auth token found');
+          return;
+        }
+        
+        const response = await axios.get('http://localhost:3000/auth/dropdown-users', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        if (response.status === 200) {
+          setUsers(response.data);
+        }
+      } catch (err) {
+        console.error('Error fetching users:', err);
+      } finally {
+        setLoadingUsers(false);
+      }
+    };
+
+    const fetchRooms = async () => {
+      setLoadingRooms(true);
+      try {
+        const response = await axios.get('http://localhost:3000/rooms');
+        if (response.status === 200) {
+          setRooms(response.data);
+        }
+      } catch (err) {
+        console.error('Error fetching rooms:', err);
+      } finally {
+        setLoadingRooms(false);
+      }
+    };
+
+    if (auth && auth.role === 'admin') {
+      fetchUsers();
+      fetchRooms();
+    }
+  }, [auth]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -98,6 +153,8 @@ function LaporanKeuanganAdd() {
       
       submitData.append('tanggal', formData.tanggal);
       submitData.append('status', formData.status);
+      submitData.append('user_id', formData.user_id);
+      submitData.append('room_id', formData.room_id);
       
       if (formData.bukti_foto) {
         submitData.append('bukti_foto', formData.bukti_foto);
@@ -194,6 +251,40 @@ function LaporanKeuanganAdd() {
                 <option value="Lunas">Lunas</option>
                 <option value="Belum Lunas">Belum Lunas</option>
               </select>
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="user_id">Nama Penyewa</label>
+              <select
+                id="user_id"
+                name="user_id"
+                value={formData.user_id}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Pilih Penyewa</option>
+                {users.map((user) => (
+                  <option key={user.id} value={user.id}>{user.name}</option>
+                ))}
+              </select>
+              {loadingUsers && <small>Loading users...</small>}
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="room_id">Ruangan</label>
+              <select
+                id="room_id"
+                name="room_id"
+                value={formData.room_id}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Pilih Ruangan</option>
+                {rooms.map((room) => (
+                  <option key={room.id} value={room.id}>{room.name}</option>
+                ))}
+              </select>
+              {loadingRooms && <small>Loading rooms...</small>}
             </div>
             
             <div className="form-group">

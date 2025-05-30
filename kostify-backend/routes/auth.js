@@ -126,6 +126,19 @@ router.get('/users', verifyToken, isAdmin, async (req, res) => {
   }
 });
 
+// Get users for dropdown menus (simpler format)
+router.get('/dropdown-users', verifyToken, async (req, res) => {
+  console.log('Fetching users for dropdown menu');
+  try {
+    // Return users directly as array, not nested in a "users" property
+    const result = await pool.query('SELECT id, username as name FROM users');
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error fetching users for dropdown:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Delete a user (admin only)
 router.delete('/users/:id', verifyToken, isAdmin, async (req, res) => {
   console.log('Deleting user ID:', req.params.id);

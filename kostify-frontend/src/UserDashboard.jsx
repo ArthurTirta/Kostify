@@ -59,8 +59,7 @@ function UserDashboard() {
       setShowBookingForm(true);
     }
   };
-  
-  const handleBookingSubmit = async () => {
+    const handleBookingSubmit = async () => {
     // Validate form
     if (!bookingData.name || !bookingData.phone || !bookingData.startDate) {
       alert('Semua field harus diisi!');
@@ -68,8 +67,36 @@ function UserDashboard() {
     }
     
     try {
-      // Update room status to booked
-      const response = await axios.patch(`${API_BASE_URL}/rooms/${selectedRoom.id}/book`);
+      // Get user ID from context if authenticated
+      const token = localStorage.getItem('token');
+      let userId = null;
+      
+      if (token) {
+        try {
+          // Get user profile to get userId
+          const profileResponse = await axios.get(`${API_BASE_URL}/auth/profile`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+          
+          if (profileResponse.data && profileResponse.data.user) {
+            userId = profileResponse.data.user.id;
+          }
+        } catch (err) {
+          console.error('Error fetching user profile:', err);
+          // Continue with booking even if we can't get userId
+        }
+      }
+      
+      // Update room status to booked and save booking details
+      const response = await axios.patch(`${API_BASE_URL}/rooms/${selectedRoom.id}/book`, {
+        name: bookingData.name,
+        phone: bookingData.phone,
+        startDate: bookingData.startDate,
+        duration: bookingData.duration,
+        userId: userId
+      });
       
       // Update local state
       setRooms(rooms.map(room => 
@@ -116,6 +143,13 @@ function UserDashboard() {
         <p>Lihat dan pesan ruangan yang tersedia</p>
 
         {error && <div className="error-message">{error}</div>}
+
+        {/* User Actions */}
+        <div className="user-actions">
+          <Link to="/user-laporan-keuangan" className="action-button">
+            Lihat Laporan Keuangan Saya
+          </Link>
+        </div>
 
         {/* Room Details Modal */}
         {showRoomDetails && selectedRoom && (
@@ -231,4 +265,4 @@ function UserDashboard() {
   );
 }
 
-export default UserDashboard; 
+export default UserDashboard;

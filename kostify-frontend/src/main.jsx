@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './index.css';
 import App from './App.jsx';
 import Dashboard from './dashboard.jsx';
@@ -8,6 +8,7 @@ import Ruangan from './ruangan.jsx';
 import LaporanKeuangan from './LaporanKeuangan.jsx';
 import LaporanKeuanganAdd from './LaporanKeuanganAdd.jsx';
 import LaporanKeuanganEdit from './LaporanKeuanganEdit.jsx';
+import UserLaporanKeuangan from './UserLaporanKeuangan.jsx';
 import AuthPage from './AuthPage.jsx';
 import RegisterPage from './RegisterPage.jsx';
 import AdminDashboard from './AdminDashboard.jsx';
@@ -30,15 +31,17 @@ const AuthWrapper = () => {
       <Route path="/laporan-keuangan" element={<LaporanKeuangan />} />
       <Route path="/laporan-keuangan/add" element={<LaporanKeuanganAdd />} />
       <Route path="/laporan-keuangan/edit/:id" element={<LaporanKeuanganEdit />} />
+      <Route path="/user-laporan-keuangan" element={<UserLaporanKeuangan />} />
       <Route path="/feedback" element={<Feedback />} />
       <Route path="/test-feedback" element={<SimpleTester />} />
       <Route path="/Authpage" element={<AuthPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/admin-dashboard" element={<AdminDashboard />} />
-      <Route path="/user-dashboard" element={<UserDashboard />} />
-      <Route path="/about" element={<About />} />
+      <Route path="/user-dashboard" element={<UserDashboard />} />      <Route path="/about" element={<About />} />
       <Route path="/admin-about" element={<AdminAbout />} />
       <Route path="/user-management" element={<UserManagement />} />
+      {/* Add a catch-all route to handle 404 errors */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 };
